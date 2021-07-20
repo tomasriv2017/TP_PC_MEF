@@ -60,7 +60,7 @@ namespace IA_MEF
             Estado = EstadosEnum.Busqueda; //estado inicial Busqueda
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 0, 0, 10); //el robot tendra un retraso de 10 milisegundos, mientras mayor sea mas lento se movera
-
+            timer.Tick += Timer_Tick; //para que la informacion sea dinamica y pueda ir cambiando, ya sea en este caso la bateria y el estado actual.
         }
 
         private void RecargarBateria()
@@ -68,5 +68,17 @@ namespace IA_MEF
             Bateria = 1000;
         }
 
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            ActualizarDatos(null, "Estado: " + Estado.ToString() + ", Bateria: " + Bateria);
+        }
+
+        public void IniciarRecoleccion(List<Basura> basuras, EstacionRecarga estacionRecarga)
+        {
+            this.basuras = basuras;
+            this.estacionRecarga = estacionRecarga;
+
+            timer.Start(); //inicio el proceso del busqueda del robot
+        }
     }
 }

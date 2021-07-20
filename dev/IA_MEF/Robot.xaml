@@ -13,7 +13,7 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
-        <Image Source="/robot.png" />
+        <Image Source="C:\Users\tomyr\Desktop\Github\TP_PC_MEF\dev\IA_MEF\Imagenes\robot.png" />
         <Rectangle x:Name="indicador" Fill="Green" Grid.Row="1" />
     </Grid>
 </UserControl>
