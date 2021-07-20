@@ -103,6 +103,18 @@ namespace IA_MEF
                         this.Estado = EstadosEnum.IrBateria; //SI TIENE MENOR DE 350 DE ENERGIA EL ROBOT DEJA DE BUSCAR LA BASURA Y VA A RECARGAR BATERIA
                     }
                     break;
+
+                case EstadosEnum.NuevaBusqueda: //ESTADO NUEVA BUSQUEDA
+                    if (basuraActual < basuras.Count)
+                    {
+                        this.Estado = EstadosEnum.Busqueda;
+                    }
+                    else
+                    {
+                        this.Estado = EstadosEnum.Aleatorio;
+                    }
+                    break;
+
             }
 
             ActualizarDatos(null, "Estado: " + Estado.ToString() + ", Bateria: " + Bateria); //para ir actualizando constante la informacion de la Ventana principal
@@ -122,6 +134,13 @@ namespace IA_MEF
             TranslateTransform translate = new TranslateTransform(x, y);
             RenderTransform = translate; //dibuja/renderiza el camino del robot hacia su nueva posicion
             indicador.Fill = new SolidColorBrush(Bateria < 350 ? Colors.Red : Colors.Green); //si la bateria es MENOR a 350 cambia al color rojo
+        }
+
+        public void IniciarRecoleccion(List<Basura> basuras, EstacionRecarga estacionRecarga) //metodo con que el inicializa la busqueda el robot
+        {
+            this.basuras = basuras;
+            this.estacionRecarga = estacionRecarga;
+            timer.Start();
         }
 
     }
