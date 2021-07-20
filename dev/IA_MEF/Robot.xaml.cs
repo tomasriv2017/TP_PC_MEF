@@ -154,6 +154,19 @@ namespace IA_MEF
                     this.Estado = EstadosEnum.Busqueda;
                     break;
 
+                case EstadosEnum.Muerto: //ESTADO MUERTO
+                    timer.Stop();
+                    MessageBox.Show("El robot ha muerto..."); //Mostrar con un POPUP el mensaje
+                    break;
+
+                case EstadosEnum.Aleatorio: //ESTADO ALEATORIO
+                    ActualizarPosicion(random.NextDouble() > 0.5 ? X - 1 : X + 1, random.NextDouble() > 0.5 ? Y - 1 : Y + 1); //PARA QUE SE MUEVA DE FORMA EERRATICA UNA VEZ RECOGIDA TODA LA BASURA
+                    if (Bateria == 0)
+                    {
+                        this.Estado = EstadosEnum.Muerto; 
+                    }
+                    break;
+
             }
 
             ActualizarDatos(null, "Estado: " + Estado.ToString() + ", Bateria: " + Bateria); //para ir actualizando constante la informacion de la Ventana principal
