@@ -115,6 +115,45 @@ namespace IA_MEF
                     }
                     break;
 
+
+                case EstadosEnum.IrBateria: //ESTADO IR A BATERIA
+                    newX = X;
+                    newY = Y;
+
+                    if (X > estacionRecarga.X)
+                    {
+                        newX = X - 1;
+                    }
+                    if (X < estacionRecarga.X)
+                    {
+                        newX = X + 1;
+                    }
+                    if (Y > estacionRecarga.Y)
+                    {
+                        newY = Y - 1;
+                    }
+                    if (Y < estacionRecarga.Y)
+                    {
+                        newY = Y + 1;
+                    }
+                    ActualizarPosicion(newX, newY);
+
+                    if (X == estacionRecarga.X && Y == estacionRecarga.Y) //SI LLEGA A LA ESTACION DE RECARGA
+                    {
+                        this.Estado = EstadosEnum.Recargar;
+                    }
+                    if (Bateria == 0)
+                    {
+                        this.Estado = EstadosEnum.Muerto;
+                    }
+                    break;
+
+                case EstadosEnum.Recargar: //ESTADO RECARGAR BATERIA
+                    RecargarBateria();
+                    //Thread.Sleep(500);
+                    this.Estado = EstadosEnum.Busqueda;
+                    break;
+
             }
 
             ActualizarDatos(null, "Estado: " + Estado.ToString() + ", Bateria: " + Bateria); //para ir actualizando constante la informacion de la Ventana principal
