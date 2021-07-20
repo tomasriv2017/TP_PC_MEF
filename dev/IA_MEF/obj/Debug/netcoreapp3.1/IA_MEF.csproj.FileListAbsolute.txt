@@ -21,3 +21,5 @@ C:\Users\tomyr\Desktop\Github\TP_PC_MEF\dev\IA_MEF\obj\Debug\netcoreapp3.1\IA_ME
 C:\Users\tomyr\Desktop\Github\TP_PC_MEF\dev\IA_MEF\obj\Debug\netcoreapp3.1\IA_MEF.dll
 C:\Users\tomyr\Desktop\Github\TP_PC_MEF\dev\IA_MEF\obj\Debug\netcoreapp3.1\IA_MEF.pdb
 C:\Users\tomyr\Desktop\Github\TP_PC_MEF\dev\IA_MEF\obj\Debug\netcoreapp3.1\IA_MEF.genruntimeconfig.cache
+C:\Users\tomyr\Desktop\Github\TP_PC_MEF\dev\IA_MEF\obj\Debug\netcoreapp3.1\Robot.g.cs
+C:\Users\tomyr\Desktop\Github\TP_PC_MEF\dev\IA_MEF\obj\Debug\netcoreapp3.1\Robot.baml
