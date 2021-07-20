@@ -50,7 +50,12 @@ namespace IA_MEF
                 Terreno.Children.Add(basura); //gracias al Canvas dibujo cada objeto basura en la Ventana Principal
             }
 
-
+            robot.ActualizarDatos += ActualizaDatos;
+            robot.IniciarRecoleccion(basuras, estacionRecarga); //cargo en el robot la lista de basuras y la estacion de recarga, para que sepa sus posiciones
+        }
+        private void ActualizaDatos(object sender, string e) //metodo para poder pintar en la pantalla principal la info del estado actual y la bateria
+        {
+            lblEstado.Content = e;
         }
 
     }
