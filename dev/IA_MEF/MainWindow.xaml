@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IA_MEF"
         mc:Ignorable="d"
-        Title="IA_MEF" Height="450" Width="800" Icon="/robot.png">
+        Title="IA_MEF" Height="450" Width="800" Icon="C:\Users\tomyr\Desktop\Github\TP_PC_MEF\dev\IA_MEF\Imagenes\robot.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />

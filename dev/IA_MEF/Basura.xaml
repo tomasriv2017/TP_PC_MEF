@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="30">
     <Grid>
-        <Image Source="/basura.png"/>
+        <Image Source="C:\Users\tomyr\Desktop\Github\TP_PC_MEF\dev\IA_MEF\Imagenes\basura.png"/>
     </Grid>
 </UserControl>

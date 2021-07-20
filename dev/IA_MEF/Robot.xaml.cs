@@ -61,12 +61,67 @@ namespace IA_MEF
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 0, 0, 10); //el robot tendra un retraso de 10 milisegundos, mientras mayor sea mas lento se movera
 
+            timer.Tick += Timer_Tick;
         }
+        private void Timer_Tick(object sender, EventArgs e) //meotodo principal para manejar los ESTADOS del robot
+        {
+            int newX, newY;
 
+            switch (this.Estado)
+            {
+                case EstadosEnum.Busqueda: //ESTADO DE BUSQUEDA DE BASURA
+                    newX = X;
+                    newY = Y;
+
+                    if (X > basuras[basuraActual].X)
+                    {
+                        newX = X - 1;
+                    }
+                    if (X < basuras[basuraActual].X)
+                    {
+                        newX = X + 1;
+                    }
+                    if (Y > basuras[basuraActual].Y)
+                    {
+                        newY = Y - 1;
+                    }
+                    if (Y < basuras[basuraActual].Y)
+                    {
+                        newY = Y + 1;
+                    }
+                    ActualizarPosicion(newX, newY);
+
+                    if ((X == basuras[basuraActual].X) && (Y == basuras[basuraActual].Y)) //SI EL ROBOT LLEGA A LA BASURA
+                    {
+                        this.basuras[basuraActual].Recolectado();
+                        basuraActual = basuraActual + 1;
+                        this.Estado = EstadosEnum.NuevaBusqueda;
+                    }
+
+                    if (Bateria < 350)
+                    {
+                        this.Estado = EstadosEnum.IrBateria; //SI TIENE MENOR DE 350 DE ENERGIA EL ROBOT DEJA DE BUSCAR LA BASURA Y VA A RECARGAR BATERIA
+                    }
+                    break;
+            }
+
+            ActualizarDatos(null, "Estado: " + Estado.ToString() + ", Bateria: " + Bateria); //para ir actualizando constante la informacion de la Ventana principal
+        }
         private void RecargarBateria()
         {
             Bateria = 1000;
         }
 
+        private void ActualizarPosicion(int x, int y) //metodo para refrescar la posicion del robot
+        {
+            Bateria--;
+            X = x;
+            Y = y;
+
+            TranslateTransform translate = new TranslateTransform(x, y);
+            RenderTransform = translate; //dibuja/renderiza el camino del robot hacia su nueva posicion
+            indicador.Fill = new SolidColorBrush(Bateria < 350 ? Colors.Red : Colors.Green); //si la bateria es MENOR a 350 cambia al color rojo
+        }
+ 
     }
 }
