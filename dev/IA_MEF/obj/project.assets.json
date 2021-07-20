@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tomyr\\Desktop\\Github\\TP_PC_MEF\\IA_MEF\\IA_MEF\\IA_MEF.csproj",
+      "projectUniqueName": "C:\\Users\\tomyr\\Desktop\\Github\\TP_PC_MEF\\dev\\IA_MEF\\IA_MEF.csproj",
       "projectName": "IA_MEF",
-      "projectPath": "C:\\Users\\tomyr\\Desktop\\Github\\TP_PC_MEF\\IA_MEF\\IA_MEF\\IA_MEF.csproj",
+      "projectPath": "C:\\Users\\tomyr\\Desktop\\Github\\TP_PC_MEF\\dev\\IA_MEF\\IA_MEF.csproj",
       "packagesPath": "C:\\Users\\tomyr\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tomyr\\Desktop\\Github\\TP_PC_MEF\\IA_MEF\\IA_MEF\\obj\\",
+      "outputPath": "C:\\Users\\tomyr\\Desktop\\Github\\TP_PC_MEF\\dev\\IA_MEF\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\tomyr\\AppData\\Roaming\\NuGet\\NuGet.Config",
