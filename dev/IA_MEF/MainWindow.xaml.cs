@@ -22,6 +22,8 @@ namespace IA_MEF
     {
         List<Basura> basuras; //los objetos basura se almacenaran en una lista
         EstacionRecarga estacionRecarga;
+        Robot robot;
+
         Random random;
 
         public MainWindow()
@@ -33,6 +35,10 @@ namespace IA_MEF
             estacionRecarga = new EstacionRecarga(x, y); //le asigno una posicion aleatoria a la estacion de recarga
             Terreno.Children.Add(estacionRecarga); //gracias al Canvas dibujo el objeto estacion de recarga en la Ventana Principal
 
+            x = random.Next(0, 700);
+            y = random.Next(0, 700);
+            robot = new Robot(x, y); //le asigno una posicion aleatoria al robot
+            Terreno.Children.Add(robot); //gracias al Canvas dibujo el objeto robot en la Ventana Principal
 
             basuras = new List<Basura>();
             for (int i = 0; i < 10; i++) //en este caso se crearan 10 basuras
@@ -44,7 +50,12 @@ namespace IA_MEF
                 Terreno.Children.Add(basura); //gracias al Canvas dibujo cada objeto basura en la Ventana Principal
             }
 
-
+            robot.ActualizarDatos += ActualizaDatos;
+            robot.IniciarRecoleccion(basuras, estacionRecarga); //cargo en el robot la lista de basuras y la estacion de recarga, para que sepa sus posiciones
+        }
+        private void ActualizaDatos(object sender, string e) //metodo para poder pintar en la pantalla principal la info del estado actual y la bateria
+        {
+            lblEstado.Content = e;
         }
 
     }

@@ -60,9 +60,9 @@ namespace IA_MEF
             Estado = EstadosEnum.Busqueda; //estado inicial Busqueda
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 0, 0, 10); //el robot tendra un retraso de 10 milisegundos, mientras mayor sea mas lento se movera
-
-            timer.Tick += Timer_Tick;
+            timer.Tick += Timer_Tick; //para que la informacion sea dinamica y pueda ir cambiando, ya sea en este caso la bateria y el estado actual.
         }
+
         private void Timer_Tick(object sender, EventArgs e) //meotodo principal para manejar los ESTADOS del robot
         {
             int newX, newY;
@@ -107,6 +107,7 @@ namespace IA_MEF
 
             ActualizarDatos(null, "Estado: " + Estado.ToString() + ", Bateria: " + Bateria); //para ir actualizando constante la informacion de la Ventana principal
         }
+
         private void RecargarBateria()
         {
             Bateria = 1000;
@@ -122,6 +123,6 @@ namespace IA_MEF
             RenderTransform = translate; //dibuja/renderiza el camino del robot hacia su nueva posicion
             indicador.Fill = new SolidColorBrush(Bateria < 350 ? Colors.Red : Colors.Green); //si la bateria es MENOR a 350 cambia al color rojo
         }
- 
+
     }
 }
