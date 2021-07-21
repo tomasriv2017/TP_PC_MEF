@@ -53,6 +53,7 @@ namespace IA_MEF
             robot.ActualizarDatos += ActualizaDatos;
             robot.IniciarRecoleccion(basuras, estacionRecarga); //cargo en el robot la lista de basuras y la estacion de recarga, para que sepa sus posiciones
         }
+
         private void ActualizaDatos(object sender, string e) //metodo para poder pintar en la pantalla principal la info del estado actual y la bateria
         {
             lblEstado.Content = e;
