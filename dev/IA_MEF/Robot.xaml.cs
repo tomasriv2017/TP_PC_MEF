@@ -163,13 +163,13 @@ namespace IA_MEF
                     ActualizarPosicion(random.NextDouble() > 0.5 ? X - 1 : X + 1, random.NextDouble() > 0.5 ? Y - 1 : Y + 1); //PARA QUE SE MUEVA DE FORMA EERRATICA UNA VEZ RECOGIDA TODA LA BASURA
                     if (Bateria == 0)
                     {
-                        this.Estado = EstadosEnum.Muerto; 
+                        this.Estado = EstadosEnum.Muerto;
                     }
                     break;
 
             }
 
-            ActualizarDatos(null, "Estado: " + Estado.ToString() + ", Bateria: " + Bateria); //para ir actualizando constante la informacion de la Ventana principal
+            ActualizarDatos(null, "Estado: " + Estado.ToString() + ", Bateria: " + Bateria + ", Basura: " + (basuras.Count - basuraActual) ); //para ir actualizando constante la informacion de la Ventana principal
         }
 
         private void RecargarBateria()
