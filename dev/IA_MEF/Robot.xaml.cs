@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,7 +36,8 @@ namespace IA_MEF
 
         Random random;
         readonly DispatcherTimer timer;
-        int basuraActual = 0;
+        int cantBasuraRecolectada = 0;
+        int TotalARecoger;
         List<Basura> basuras;
         EstacionRecarga estacionRecarga;
 
@@ -59,42 +61,49 @@ namespace IA_MEF
             indicador.Fill = new SolidColorBrush(Bateria < 350 ? Colors.Red : Colors.Green);
             Estado = EstadosEnum.Busqueda; //estado inicial Busqueda
             timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 10); //el robot tendra un retraso de 10 milisegundos, mientras mayor sea mas lento se movera
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 5); //el robot tendra un retraso de 10 milisegundos, mientras mayor sea mas lento se movera
             timer.Tick += Timer_Tick; //para que la informacion sea dinamica y pueda ir cambiando, ya sea en este caso la bateria y el estado actual.
         }
 
         private void Timer_Tick(object sender, EventArgs e) //meotodo principal para manejar los ESTADOS del robot
         {
-            int newX, newY;
 
             switch (this.Estado)
             {
                 case EstadosEnum.Busqueda: //ESTADO DE BUSQUEDA DE BASURA
-                    newX = X;
-                    newY = Y;
+                    int newX = X;
+                    int newY = Y;
 
-                    if (X > basuras[basuraActual].X)
+                    int basuraObjetivo = DeterminarBasuraMasCercana();
+
+                    System.Diagnostics.Debug.WriteLine("Robo("+X+";"+Y+")");
+                    System.Diagnostics.Debug.WriteLine("BasuraObjetivo(" + basuras[basuraObjetivo].X + ";" + basuras[basuraObjetivo].Y + ")");
+
+                    if (X > basuras[basuraObjetivo].X)
                     {
                         newX = X - 1;
                     }
-                    if (X < basuras[basuraActual].X)
+                    if (X < basuras[basuraObjetivo].X)
                     {
                         newX = X + 1;
                     }
-                    if (Y > basuras[basuraActual].Y)
+                    if (Y > basuras[basuraObjetivo].Y)
                     {
                         newY = Y - 1;
                     }
-                    if (Y < basuras[basuraActual].Y)
+                    if (Y < basuras[basuraObjetivo].Y)
                     {
                         newY = Y + 1;
                     }
                     ActualizarPosicion(newX, newY);
 
-                    if ((X == basuras[basuraActual].X) && (Y == basuras[basuraActual].Y)) //SI EL ROBOT LLEGA A LA BASURA
+                    if ((X == basuras[basuraObjetivo].X) && (Y == basuras[basuraObjetivo].Y)) //SI EL ROBOT LLEGA A LA BASURA
                     {
-                        this.basuras[basuraActual].Recolectado();
-                        basuraActual = basuraActual + 1;
+                        this.basuras[basuraObjetivo].Recolectado();
+                        this.basuras.Remove(this.basuras[basuraObjetivo]);
+                        cantBasuraRecolectada ++;
+
+                        System.Diagnostics.Debug.WriteLine("Basura Recolectada!!!");
                         this.Estado = EstadosEnum.NuevaBusqueda;
                     }
 
@@ -105,7 +114,7 @@ namespace IA_MEF
                     break;
 
                 case EstadosEnum.NuevaBusqueda: //ESTADO NUEVA BUSQUEDA
-                    if (basuraActual < basuras.Count)
+                    if (cantBasuraRecolectada < TotalARecoger)
                     {
                         this.Estado = EstadosEnum.Busqueda;
                     }
@@ -114,7 +123,6 @@ namespace IA_MEF
                         this.Estado = EstadosEnum.Aleatorio;
                     }
                     break;
-
 
                 case EstadosEnum.IrBateria: //ESTADO IR A BATERIA
                     newX = X;
@@ -169,7 +177,7 @@ namespace IA_MEF
 
             }
 
-            ActualizarDatos(null, "Estado: " + Estado.ToString() + ", Bateria: " + Bateria + ", Basura: " + (basuras.Count - basuraActual) ); //para ir actualizando constante la informacion de la Ventana principal
+            ActualizarDatos(null, "Estado: " + Estado.ToString() + ", Bateria: " + Bateria + ", Basura: " + (TotalARecoger - cantBasuraRecolectada) ); //para ir actualizando constante la informacion de la Ventana principal
         }
 
         private void RecargarBateria()
@@ -188,12 +196,33 @@ namespace IA_MEF
             indicador.Fill = new SolidColorBrush(Bateria < 350 ? Colors.Red : Colors.Green); //si la bateria es MENOR a 350 cambia al color rojo
         }
 
+        private int DeterminarBasuraMasCercana()
+        {
+            int diferencia = ( (basuras.First().X + basuras.First().Y) - (X + Y) );
+            int comparador = 0;
+            int indice = 0;
+            for(int i = 1; i < basuras.Count; i++)
+            {
+                comparador = ( (basuras[i].X + basuras[i].Y) - (X + Y) );
+                if ( comparador < diferencia)
+                {
+                    diferencia = comparador;
+                    indice = i;
+                }
+
+            }
+
+            return indice;
+        }
+
         public void IniciarRecoleccion(List<Basura> basuras, EstacionRecarga estacionRecarga) //metodo con que el inicializa la busqueda el robot
         {
             this.basuras = basuras;
             this.estacionRecarga = estacionRecarga;
+            TotalARecoger = this.basuras.Count;
             timer.Start();
         }
+
 
     }
 }
